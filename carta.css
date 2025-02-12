@@ -31,8 +31,6 @@ p {
     font-size: 1.5rem;
 }
 
-
-
 /* Contenedor de corazones */
 .hearts-container {
     position: absolute;
@@ -44,6 +42,7 @@ p {
     overflow: hidden;
 }
 
+/* Estilo del botón */
 .fancy-button {
     display: inline-block;
     padding: 15px 30px;
@@ -58,17 +57,40 @@ p {
     overflow: hidden;
     margin-top: 20px;
     font-family: Arial, sans-serif;
+    border: none;
+    cursor: pointer;
 }
 
-.fancy-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+/* Efecto de brillo */
+.fancy-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, rgba(255, 255, 255, 0) 70%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
 }
 
+.fancy-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+/* Efecto de rebote */
 .fancy-button:active {
-    transform: translateY(2px);
+    animation: bounce 0.3s ease;
 }
 
+/* Vibración sutil */
+@keyframes bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
 
 /* Estilo de los corazones */
 .heart {
@@ -86,28 +108,66 @@ p {
     100% { transform: translateY(-10vh) scale(1); opacity: 0; }
 }
 
-/* Animación de bajada (corazones desde arriba) */
-@keyframes floatDown {
-    0% { transform: translateY(-10vh) scale(1); opacity: 1; }
-    100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-}
-
 /* Movimiento lateral */
 @keyframes moveSide {
     0% { transform: translateX(0); }
     100% { transform: translateX(20px); }
 }
 
-/* Corazones que suben desde abajo */
+/* Corazones que suben */
 .heart.bottom {
     bottom: -10px;
     animation: floatUp 5s linear infinite, moveSide 3s ease-in-out infinite alternate;
 }
 
-/* Corazones que bajan desde arriba */
-.heart.top {
-    top: -10px;
-    
+/* Ajustes para móviles */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    .fancy-button {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+
+    .heart {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Animaciones especiales para celulares */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    .fancy-button {
+        padding: 10px 20px;
+        font-size: 14px;
+        animation: pulse 1.5s infinite;
+    }
+
+    .heart {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+/* Efecto de pulsación en móviles */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
 }
 
 /* Distribución aleatoria */
